@@ -1,0 +1,19 @@
+<resources>
+
+    <string name="app_name">Taxi Hailing</string>
+    <string name="action_settings">Settings</string>
+
+    <!-- Strings used for fragments for navigation -->
+
+    <string name="splash_fragment_label">Splash Fragment</string>
+    <string name="login_fragment_label">Login Fragment</string>
+
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+
+    <string name="hello_splash_fragment">Hello splash fragment</string>
+    <string name="hello_login_fragment">Hello login fragment. Arg: %1$s</string>
+
+    <string name="internet_not_available">Please check your network connection.</string>
+
+</resources>
