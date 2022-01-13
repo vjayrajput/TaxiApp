@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ArrayAdapter
 import androidx.core.widget.doOnTextChanged
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
@@ -62,9 +63,23 @@ class RegisterFragment : Fragment() {
         binding.tilEmail.editText?.doOnTextChanged { inputText, _, _, _ ->
             viewModel.errorEmail.value = null
         }
+        binding.tilPhoneNumber.editText?.doOnTextChanged { inputText, _, _, _ ->
+            viewModel.errorPhoneNumber.value = null
+        }
+        binding.tilGender.editText?.doOnTextChanged { inputText, _, _, _ ->
+            viewModel.errorGender.value = null
+        }
         binding.tilPassword.editText?.doOnTextChanged { inputText, _, _, _ ->
             viewModel.errorPassword.value = null
         }
+
+        setUpDropDown()
+    }
+
+    private fun setUpDropDown() {
+        val items = listOf("Male", "Female", "Other")
+        val adapter = ArrayAdapter(requireContext(), R.layout.list_item, items)
+        binding.edtGender.setAdapter(adapter)
     }
 
     private fun observerRegisterResponse() {

@@ -32,10 +32,14 @@ class RegisterViewModel @Inject constructor(
 
     var name = MutableLiveData<String>().default("")
     var email = MutableLiveData<String>().default("")
+    var phoneNumber = MutableLiveData<String>().default("")
+    var gender = MutableLiveData<String>().default("")
     var password = MutableLiveData<String>().default("")
 
     var errorName = MutableLiveData<String?>().default(null)
     var errorEmail = MutableLiveData<String?>().default(null)
+    var errorPhoneNumber = MutableLiveData<String?>().default(null)
+    var errorGender = MutableLiveData<String?>().default(null)
     var errorPassword = MutableLiveData<String?>().default(null)
 
     private val _message = MutableLiveData<Event<String>>()
@@ -61,6 +65,17 @@ class RegisterViewModel @Inject constructor(
             errorEmail.value = appContext.getString(R.string.valid_email_message)
             isValid = false
         }
+
+        if (TextUtils.isEmpty(phoneNumber.value!!)) {
+            errorPhoneNumber.value = appContext.getString(R.string.empty_phone_number_validation)
+            isValid = false
+        }
+
+        if (TextUtils.isEmpty(gender.value!!)) {
+            errorGender.value = appContext.getString(R.string.empty_gender_validation)
+            isValid = false
+        }
+
         if (TextUtils.isEmpty(password.value!!)) {
             errorPassword.value = appContext.getString(R.string.empty_password_validation)
             isValid = false
@@ -71,6 +86,8 @@ class RegisterViewModel @Inject constructor(
     private fun clearErrorView() {
         errorName.value = null
         errorEmail.value = null
+        errorPhoneNumber.value = null
+        errorGender.value = null
         errorPassword.value = null
     }
 
@@ -93,6 +110,11 @@ class RegisterViewModel @Inject constructor(
                             userPref.userEmail = user?.email ?: ""
                             userPref.accessToken = user?.token ?: ""
                             userPref.isLoggedIn = true
+                            /**
+                             * here storing phone number and gender in prefs
+                             */
+                            userPref.userPhoneNumber = phoneNumber.value!!
+                            userPref.userGender = gender.value!!
                         } else {
                             _message.value = Event(it.data.message)
                         }

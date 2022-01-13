@@ -85,6 +85,12 @@ class LoginViewModel @Inject constructor(
                             userPref.userEmail = user?.email ?: ""
                             userPref.accessToken = user?.token ?: ""
                             userPref.isLoggedIn = true
+                            /**
+                             * here not getting gender phone number
+                             * so that stored dummy data
+                             */
+                            userPref.userPhoneNumber = "9000090000"
+                            userPref.userGender = "Male"
                         } else {
                             _message.value = Event(it.data.message)
                         }

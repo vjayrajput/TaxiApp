@@ -43,10 +43,12 @@ class UserPreferenceProvider @Inject constructor(@ApplicationContext context: Co
     companion object {
         private const val USER_PREFERENCES = "user_shared_preference"
         private const val USER_PREF_KEY_IS_LOGGED_IN = "user_pref_key_is_logged_in"
+        private const val USER_PREF_KEY_ACCESS_TOKEN = "user_pref_key_access_token"
         private const val USER_PREF_KEY_USER_ID = "user_pref_key_user_id"
         private const val USER_PREF_KEY_USER_NAME = "user_pref_key_user_name"
         private const val USER_PREF_KEY_USER_EMAIL = "user_pref_key_user_email"
-        private const val USER_PREF_KEY_ACCESS_TOKEN = "user_pref_key_access_token"
+        private const val USER_PREF_KEY_USER_PHONE_NUMBER = "user_pref_key_user_phone_number"
+        private const val USER_PREF_KEY_USER_GENDER = "user_pref_key_user_gender"
     }
 
     private fun getPrefString(key: String): String {
@@ -83,6 +85,18 @@ class UserPreferenceProvider @Inject constructor(@ApplicationContext context: Co
         get() = getPrefString(USER_PREF_KEY_USER_EMAIL, "")
         set(value) {
             preference.edit().putString(USER_PREF_KEY_USER_EMAIL, value).apply()
+        }
+
+    var userPhoneNumber: String
+        get() = getPrefString(USER_PREF_KEY_USER_PHONE_NUMBER, "")
+        set(value) {
+            preference.edit().putString(USER_PREF_KEY_USER_PHONE_NUMBER, value).apply()
+        }
+
+    var userGender: String
+        get() = getPrefString(USER_PREF_KEY_USER_GENDER, "")
+        set(value) {
+            preference.edit().putString(USER_PREF_KEY_USER_GENDER, value).apply()
         }
 
     var accessToken: String
