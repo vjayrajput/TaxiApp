@@ -13,8 +13,6 @@ import javax.inject.Singleton
 @Singleton
 class UserPreferenceProvider @Inject constructor(@ApplicationContext context: Context) {
 
-    private val TAG: String = UserPreferenceProvider::class.java.simpleName
-
     private val appContext = context.applicationContext
 
     private val preference: SharedPreferences
@@ -49,6 +47,8 @@ class UserPreferenceProvider @Inject constructor(@ApplicationContext context: Co
         private const val USER_PREF_KEY_USER_EMAIL = "user_pref_key_user_email"
         private const val USER_PREF_KEY_USER_PHONE_NUMBER = "user_pref_key_user_phone_number"
         private const val USER_PREF_KEY_USER_GENDER = "user_pref_key_user_gender"
+        private const val USER_PREF_KEY_LATITUDE = "user_pref_key_latitude"
+        private const val USER_PREF_KEY_LONGITUDE = "user_pref_key_longitude"
     }
 
     private fun getPrefString(key: String): String {
@@ -105,6 +105,17 @@ class UserPreferenceProvider @Inject constructor(@ApplicationContext context: Co
             preference.edit().putString(USER_PREF_KEY_ACCESS_TOKEN, value).apply()
         }
 
+    var latitude: String
+        get() = getPrefString(USER_PREF_KEY_LATITUDE, "0")
+        set(value) {
+            preference.edit().putString(USER_PREF_KEY_LATITUDE, value).apply()
+        }
+
+    var longitude: String
+        get() = getPrefString(USER_PREF_KEY_LONGITUDE, "0")
+        set(value) {
+            preference.edit().putString(USER_PREF_KEY_LONGITUDE, value).apply()
+        }
 
     fun clearUserSharedPreference() {
         try {

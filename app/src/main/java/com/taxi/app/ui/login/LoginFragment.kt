@@ -51,7 +51,11 @@ class LoginFragment : Fragment() {
         observerLoginResponse()
         binding.btnLogin.setSafeOnClickListener {
             activity?.hideKeyboard()
-            viewModel.userLogin()
+            if (activity!!.isNetworkAvailable()) {
+                viewModel.userLogin()
+            } else {
+                activity?.toast(getString(R.string.internet_not_available))
+            }
         }
         binding.tilEmail.editText?.doOnTextChanged { _, _, _, _ ->
             viewModel.errorEmail.value = null

@@ -30,6 +30,9 @@ class RegisterViewModel @Inject constructor(
         private val TAG: String = RegisterViewModel::class.java.simpleName
     }
 
+    var latitude = MutableLiveData<Double>().default(0.0)
+    var longitude = MutableLiveData<Double>().default(0.0)
+
     var name = MutableLiveData<String>().default("")
     var email = MutableLiveData<String>().default("")
     var phoneNumber = MutableLiveData<String>().default("")
@@ -50,7 +53,7 @@ class RegisterViewModel @Inject constructor(
     val registerResponse: LiveData<Event<ApiResult<RegisterResponse>>>
         get() = _registerResponse
 
-    private fun isValidData(): Boolean {
+    fun isValidData(): Boolean {
         var isValid = true
         clearErrorView()
         if (TextUtils.isEmpty(name.value)) {
@@ -95,11 +98,15 @@ class RegisterViewModel @Inject constructor(
         Log.d(TAG, "userRegister")
         if (isValidData()) {
             clearErrorView()
+            Log.e(TAG, "userRegister latitude : " + latitude.value)
+            Log.e(TAG, "userRegister longitude :" + longitude.value)
             viewModelScope.launch {
                 val request = RegisterRequest()
                 request.name = name.value!!
                 request.email = email.value!!
                 request.password = password.value!!
+
+
                 _registerResponse.addSource(userRepository.register(request)) {
                     if (it.status == Status.SUCCESS) {
                         val code = it.data?.code
@@ -115,6 +122,8 @@ class RegisterViewModel @Inject constructor(
                              */
                             userPref.userPhoneNumber = phoneNumber.value!!
                             userPref.userGender = gender.value!!
+                            userPref.latitude = latitude.value.toString()
+                            userPref.longitude = longitude.value.toString()
                         } else {
                             _message.value = Event(it.data.message)
                         }

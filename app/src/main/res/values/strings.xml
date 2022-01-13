@@ -4,6 +4,10 @@
     <string name="title_login">Login</string>
     <string name="login">Login</string>
 
+
+    <string name="sign_up">Sign Up</string>
+    <string name="register">Register</string>
+
     <string name="hint_name">Name</string>
     <string name="hint_email_address">Email</string>
     <string name="hint_phone_number">Phone number</string>
@@ -18,8 +22,5 @@
     <string name="empty_gender_validation">Please select gender</string>
     <string name="empty_password_validation">Please enter password</string>
     <string name="valid_email_message">Please enter valid email address</string>
-    <string name="sign_up">Sign Up</string>
-    <string name="register">Register</string>
-
 
 </resources>
