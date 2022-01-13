@@ -1,6 +1,7 @@
 package com.taxi.app.data.remote
 
 import android.content.Intent
+import android.util.Log
 import com.google.gson.Gson
 import com.google.gson.JsonParseException
 import com.google.gson.JsonSyntaxException
@@ -10,7 +11,6 @@ import com.taxi.app.TaxiApplication
 import com.taxi.app.data.model.api.BaseResponse
 import com.taxi.app.data.model.api.ErrorResponse
 import com.taxi.app.utils.ACTION_LOGOUT
-import com.taxi.app.utils.Logger
 import retrofit2.HttpException
 import java.io.IOException
 import java.net.ConnectException
@@ -47,7 +47,7 @@ abstract class SafeApiRequest {
     private fun <T : Any> handleException(e: Exception): ApiResult<T> {
         return when (e) {
             is UnknownHostException -> {
-                Logger.e(TAG, "handleException c1")
+                Log.e(TAG, "handleException c1")
                 ApiResult.error(
                     getErrorMessage(ErrorCodes.SocketTimeOut.code),
                     ErrorCodes.SocketTimeOut.code,
@@ -55,7 +55,7 @@ abstract class SafeApiRequest {
                 )
             }
             is ConnectException -> {
-                Logger.e(TAG, "handleException c2")
+                Log.e(TAG, "handleException c2")
                 ApiResult.error(
                     getErrorMessage(ErrorCodes.SocketTimeOut.code),
                     ErrorCodes.SocketTimeOut.code,
@@ -63,7 +63,7 @@ abstract class SafeApiRequest {
                 )
             }
             is SocketTimeoutException -> {
-                Logger.e(TAG, "handleException c3")
+                Log.e(TAG, "handleException c3")
                 ApiResult.error(
                     getErrorMessage(ErrorCodes.SocketTimeOut.code),
                     ErrorCodes.SocketTimeOut.code,
@@ -71,7 +71,7 @@ abstract class SafeApiRequest {
                 )
             }
             is TimeoutException -> {
-                Logger.e(TAG, "handleException c4")
+                Log.e(TAG, "handleException c4")
                 ApiResult.error(
                     getErrorMessage(ErrorCodes.SocketTimeOut.code),
                     ErrorCodes.SocketTimeOut.code,
@@ -79,29 +79,29 @@ abstract class SafeApiRequest {
                 )
             }
             is JsonSyntaxException -> {
-                Logger.e(TAG, "handleException c5")
+                Log.e(TAG, "handleException c5")
                 ApiResult.error(
                     "Json Syntax error " + e.message, ErrorCodes.JsonSyntax.code, null
                 )
             }
             is JsonParseException -> {
-                Logger.e(TAG, "handleException c6")
+                Log.e(TAG, "handleException c6")
                 ApiResult.error(
                     "Json Parsing error " + e.message, ErrorCodes.JsonParse.code, null
                 )
             }
             is IOException -> {
-                Logger.e(TAG, "handleException c7")
+                Log.e(TAG, "handleException c7")
                 ApiResult.error(e.message!!, ErrorCodes.IOError.code, null)
             }
             is HttpException -> {
-                Logger.e(TAG, "handleException c8")
+                Log.e(TAG, "handleException c8")
                 try {
                     if (e.response() != null && e.response()!!.errorBody() != null) {
-                        Logger.e(TAG, "handleException c8 1")
+                        Log.e(TAG, "handleException c8 1")
                         val body = e.response()!!.errorBody()
                         if (body == null) {
-                            Logger.e(TAG, "handleException c8 1 body null")
+                            Log.e(TAG, "handleException c8 1 body null")
                             ApiResult.error(getErrorMessage(e.code()), e.code(), null)
                         }
                         val gson = Gson()
@@ -114,9 +114,9 @@ abstract class SafeApiRequest {
                             errorResponse = gson.fromJson(body!!.string(), type)
                         }
                         if (errorResponse != null) {
-                            Logger.e(TAG, "handleException c81 errorResponse :$errorResponse")
+                            Log.e(TAG, "handleException c81 errorResponse :$errorResponse")
                             if (errorResponse.code == 401) {
-                                Logger.e(TAG, "Unauthorised")
+                                Log.e(TAG, "Unauthorised")
                                 val intent = Intent()
                                 intent.action = ACTION_LOGOUT
                                 if (TaxiApplication.getInstance().applicationContext != null) {
@@ -127,20 +127,20 @@ abstract class SafeApiRequest {
                             }
                             ApiResult.error(errorResponse.message, errorResponse.code, null)
                         } else {
-                            Logger.e(TAG, "handleException c8ww")
+                            Log.e(TAG, "handleException c8ww")
                             ApiResult.error(getErrorMessage(e.code()), e.code(), null)
                         }
                     } else {
-                        Logger.e(TAG, "handleException c8 2")
+                        Log.e(TAG, "handleException c8 2")
                         ApiResult.error(getErrorMessage(e.code()), e.code(), null)
                     }
                 } catch (e: Exception) {
-                    Logger.e(TAG, "handleException c8 3")
+                    Log.e(TAG, "handleException c8 3")
                     ApiResult.error("${e.localizedMessage}", ErrorCodes.OtherError.code, null)
                 }
             }
             else -> {
-                Logger.e(TAG, "handleException c9")
+                Log.e(TAG, "handleException c9")
                 ApiResult.error(
                     getErrorMessage(Int.MAX_VALUE),
                     ErrorCodes.SomethingWentWrong.code,

@@ -5,7 +5,7 @@ import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import com.taxi.app.R
 import com.taxi.app.data.local.prefs.UserPreferenceProvider
-import com.taxi.app.utils.getVersionName
+import com.taxi.app.utils.extensions.getAppVersionName
 import dagger.hilt.android.qualifiers.ApplicationContext
 import okhttp3.Interceptor
 import okhttp3.Request
@@ -32,7 +32,7 @@ class ApiHeaderInterceptor @Inject constructor(
         if (!isInternetAvailable()) {
             throw ConnectException(appContext.getString(R.string.internet_not_available))
         }
-        val versionName = appContext.getVersionName()
+        val versionName = appContext.getAppVersionName()
 
         val request: Request = chain.request().newBuilder()
             .addHeader(HEADER_KEY_CONTENT_TYPE, "application/json")
