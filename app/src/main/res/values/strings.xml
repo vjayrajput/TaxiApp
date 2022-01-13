@@ -29,5 +29,6 @@
     <string name="user_gender">Gender : %1$s</string>
     <string name="user_latitude">Latitude : %1$s</string>
     <string name="user_longitude">Longitude : %1$s</string>
+    <string name="menu_logout">Logout</string>
 
 </resources>
