@@ -1,7 +1,9 @@
 package com.taxi.app.data.repository
 
+import android.util.Log
 import androidx.lifecycle.LiveData
-import com.taxi.app.data.model.api.LogoutRequest
+import com.taxi.app.data.model.api.LoginRequest
+import com.taxi.app.data.model.api.LoginResponse
 import com.taxi.app.data.model.api.LogoutResponse
 import com.taxi.app.data.remote.ApiResult
 import com.taxi.app.data.remote.ApiSource
@@ -15,10 +17,20 @@ class UserRepository @Inject constructor(private val apiSource: ApiSource) : Saf
         private val TAG: String = UserRepository::class.java.simpleName
     }
 
-    suspend fun logout(logoutRequest: LogoutRequest): LiveData<ApiResult<LogoutResponse>> {
+    suspend fun login(loginRequest: LoginRequest): LiveData<ApiResult<LoginResponse>> {
+        Log.d(TAG, "login")
         return performNetworkOperation(networkCall = {
             apiRequest {
-                apiSource.logout(logoutRequestBody = logoutRequest)
+                apiSource.login(loginRequest = loginRequest)
+            }
+        })
+    }
+
+    suspend fun logout(): LiveData<ApiResult<LogoutResponse>> {
+        Log.d(TAG, "logout")
+        return performNetworkOperation(networkCall = {
+            apiRequest {
+                apiSource.logout()
             }
         })
     }

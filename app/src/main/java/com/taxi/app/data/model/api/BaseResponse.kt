@@ -14,7 +14,6 @@ abstract class BaseResponse : Serializable {
     @SerializedName("message")
     var message = ""
 
-
     override fun toString(): String {
         return "BaseResponse(code=$code, status=$status, message='$message')"
     }

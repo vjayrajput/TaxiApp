@@ -4,36 +4,16 @@ import android.os.Build
 import android.text.TextUtils
 import android.util.Patterns
 import java.io.File
-import java.net.URLConnection
 import java.text.DecimalFormat
 import java.util.*
 
 
 const val tagStringUtil = "StringUtils"
 
-fun String?.isImageFile(): Boolean {
-    //val mimeType = URLConnection.guessContentTypeFromName(this)
-    val mimeType = this
-    if (mimeType != null) {
-        return mimeType.startsWith("image")
-    }
-    return false
-}
-
-fun String?.isVideoFile(): Boolean {
-    val mimeType = this
-    if (mimeType != null) {
-        return mimeType.startsWith("video")
-    }
-    return false
-}
-
-fun String?.isVideoUrl(): Boolean {
-    val mimeType = URLConnection.guessContentTypeFromName(this)
-    if (mimeType != null) {
-        return mimeType.startsWith("video")
-    }
-    return false
+fun String.isValidEmail(): Boolean {
+    return if (!TextUtils.isEmpty(this)) {
+        Patterns.EMAIL_ADDRESS.matcher(this).matches()
+    } else false
 }
 
 val deviceName: String
@@ -53,12 +33,6 @@ val String.containsDigit: Boolean
 
 val String.isAlphanumeric: Boolean
     get() = matches(Regex("[a-zA-Z0-9]*"))
-
-fun String.isValidEmail(): Boolean {
-    return if (!TextUtils.isEmpty(this)) {
-        Patterns.EMAIL_ADDRESS.matcher(this).matches()
-    } else false
-}
 
 fun String.toPriceAmount(): String {
     //println("11".toPriceAmount())

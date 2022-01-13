@@ -45,6 +45,8 @@ class MainActivity : AppCompatActivity() {
                  */
                 if (destination.id == R.id.loginFragment) {
                     binding.toolbar.navigationIcon = null
+                } else if (destination.id == R.id.dashboardFragment) {
+                    binding.toolbar.navigationIcon = null
                 }
                 supportActionBar?.show()
             }
