@@ -23,4 +23,11 @@
     <string name="empty_password_validation">Please enter password</string>
     <string name="valid_email_message">Please enter valid email address</string>
 
+    <string name="user_name">Name : %1$s</string>
+    <string name="user_email">Email : %1$s</string>
+    <string name="user_phone_number">Phone Number : %1$s</string>
+    <string name="user_gender">Gender : %1$s</string>
+    <string name="user_latitude">Latitude : %1$s</string>
+    <string name="user_longitude">Longitude : %1$s</string>
+
 </resources>
