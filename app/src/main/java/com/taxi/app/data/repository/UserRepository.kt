@@ -2,9 +2,7 @@ package com.taxi.app.data.repository
 
 import android.util.Log
 import androidx.lifecycle.LiveData
-import com.taxi.app.data.model.api.LoginRequest
-import com.taxi.app.data.model.api.LoginResponse
-import com.taxi.app.data.model.api.LogoutResponse
+import com.taxi.app.data.model.api.*
 import com.taxi.app.data.remote.ApiResult
 import com.taxi.app.data.remote.ApiSource
 import com.taxi.app.data.remote.SafeApiRequest
@@ -25,6 +23,16 @@ class UserRepository @Inject constructor(private val apiSource: ApiSource) : Saf
             }
         })
     }
+
+    suspend fun register(registerRequest: RegisterRequest): LiveData<ApiResult<RegisterResponse>> {
+        Log.d(TAG, "register")
+        return performNetworkOperation(networkCall = {
+            apiRequest {
+                apiSource.register(registerRequest = registerRequest)
+            }
+        })
+    }
+
 
     suspend fun logout(): LiveData<ApiResult<LogoutResponse>> {
         Log.d(TAG, "logout")

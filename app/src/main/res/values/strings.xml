@@ -3,15 +3,20 @@
     <string name="app_name">Taxi Hailing</string>
     <string name="title_login">Login</string>
     <string name="login">Login</string>
+
+    <string name="hint_name">Name</string>
     <string name="hint_email_address">Email</string>
     <string name="hint_password">Password</string>
 
 
     <string name="internet_not_available">Please check your network connection.</string>
 
+    <string name="empty_name_validation">Please enter name</string>
     <string name="empty_email_validation">Please enter email address</string>
     <string name="empty_password_validation">Please enter password</string>
     <string name="valid_email_message">Please enter valid email address</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="register">Register</string>
 
 
 </resources>

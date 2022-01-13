@@ -43,10 +43,10 @@ class UserPreferenceProvider @Inject constructor(@ApplicationContext context: Co
     companion object {
         private const val USER_PREFERENCES = "user_shared_preference"
         private const val USER_PREF_KEY_IS_LOGGED_IN = "user_pref_key_is_logged_in"
-        private const val USER_PREF_KEY_IS_ACCOUNT_CREATED = "user_pref_key_is_account_created"
         private const val USER_PREF_KEY_USER_ID = "user_pref_key_user_id"
         private const val USER_PREF_KEY_USER_NAME = "user_pref_key_user_name"
-        private const val USER_PREF_KEY_USER_PHONE = "user_pref_key_user_phone"
+        private const val USER_PREF_KEY_USER_EMAIL = "user_pref_key_user_email"
+        private const val USER_PREF_KEY_ACCESS_TOKEN = "user_pref_key_access_token"
     }
 
     private fun getPrefString(key: String): String {
@@ -67,13 +67,6 @@ class UserPreferenceProvider @Inject constructor(@ApplicationContext context: Co
             preference.edit().putBoolean(USER_PREF_KEY_IS_LOGGED_IN, value).apply()
         }
 
-    var isAccountCreated: Boolean
-        get() = preference.getBoolean(USER_PREF_KEY_IS_ACCOUNT_CREATED, false)
-        set(value) {
-            preference.edit().putBoolean(USER_PREF_KEY_IS_ACCOUNT_CREATED, value).apply()
-        }
-
-
     var userId: String
         get() = getPrefString(USER_PREF_KEY_USER_ID, "")
         set(value) {
@@ -86,11 +79,18 @@ class UserPreferenceProvider @Inject constructor(@ApplicationContext context: Co
             preference.edit().putString(USER_PREF_KEY_USER_NAME, value).apply()
         }
 
-    var userPhone: String
-        get() = getPrefString(USER_PREF_KEY_USER_PHONE, "")
+    var userEmail: String
+        get() = getPrefString(USER_PREF_KEY_USER_EMAIL, "")
         set(value) {
-            preference.edit().putString(USER_PREF_KEY_USER_PHONE, value).apply()
+            preference.edit().putString(USER_PREF_KEY_USER_EMAIL, value).apply()
         }
+
+    var accessToken: String
+        get() = getPrefString(USER_PREF_KEY_ACCESS_TOKEN, "")
+        set(value) {
+            preference.edit().putString(USER_PREF_KEY_ACCESS_TOKEN, value).apply()
+        }
+
 
     fun clearUserSharedPreference() {
         try {

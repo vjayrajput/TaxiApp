@@ -18,16 +18,13 @@ import com.taxi.app.utils.extensions.*
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
+
 @AndroidEntryPoint
 class LoginFragment : Fragment() {
 
     companion object {
         private val TAG: String = LoginFragment::class.java.simpleName
     }
-
-//    private var _binding: FragmentLoginBinding? = null
-//
-//    private val binding get() = _binding!!
 
     private lateinit var binding: FragmentLoginBinding
 
@@ -40,7 +37,7 @@ class LoginFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         Log.d(TAG, "onCreateView")
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_login, container, false)
         binding.lifecycleOwner = this
@@ -56,11 +53,14 @@ class LoginFragment : Fragment() {
             activity?.hideKeyboard()
             viewModel.userLogin()
         }
-        binding.tilEmail.editText?.doOnTextChanged { inputText, _, _, _ ->
+        binding.tilEmail.editText?.doOnTextChanged { _, _, _, _ ->
             viewModel.errorEmail.value = null
         }
-        binding.tilPassword.editText?.doOnTextChanged { inputText, _, _, _ ->
+        binding.tilPassword.editText?.doOnTextChanged { _, _, _, _ ->
             viewModel.errorPassword.value = null
+        }
+        binding.btnRegister.setSafeOnClickListener {
+            findNavController().navigate(R.id.action_loginFragment_to_registerFragment)
         }
     }
 
@@ -80,7 +80,9 @@ class LoginFragment : Fragment() {
                 Status.SUCCESS -> {
                     Log.d(TAG, "SUCCESS...")
                     binding.loaderView.progressView.gone()
-                    findNavController().navigate(R.id.action_loginFragment_to_dashboardFragment)
+                    if (it.data?.code != 1) {
+                        findNavController().navigate(R.id.action_loginFragment_to_dashboardFragment)
+                    }
                 }
                 Status.ERROR -> {
                     Log.d(TAG, "ERROR...")

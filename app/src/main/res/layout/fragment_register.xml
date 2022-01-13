@@ -5,8 +5,6 @@
 
     <data>
 
-        <import type="android.view.View" />
-
         <import type="android.text.TextUtils" />
 
         <variable
@@ -18,19 +16,104 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context="com.taxi.app.ui.register.RegisterFragment">
+        tools:context=".ui.login.LoginFragment">
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/til_name"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_16sdp"
+            android:layout_marginTop="@dimen/_32sdp"
+            android:layout_marginEnd="@dimen/_16sdp"
+            app:error="@{viewModel.errorName}"
+            app:errorEnabled="@{TextUtils.isEmpty(viewModel.errorName) ? false : true}"
+            app:errorIconDrawable="@null"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edt_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/hint_name"
+                android:inputType="textPersonName|textCapWords"
+                android:text="@={viewModel.name}" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/til_email"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_16sdp"
+            android:layout_marginTop="@dimen/_16sdp"
+            android:layout_marginEnd="@dimen/_16sdp"
+            app:error="@{viewModel.errorEmail}"
+            app:errorEnabled="@{TextUtils.isEmpty(viewModel.errorEmail) ? false : true}"
+            app:errorIconDrawable="@null"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/til_name">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edt_email"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/hint_email_address"
+                android:inputType="textEmailAddress"
+                android:text="@={viewModel.email}" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/til_password"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_16sdp"
+            android:layout_marginTop="@dimen/_16sdp"
+            android:layout_marginEnd="@dimen/_16sdp"
+            app:endIconMode="password_toggle"
+            app:error="@{viewModel.errorPassword}"
+            app:errorEnabled="@{TextUtils.isEmpty(viewModel.errorPassword) ? false : true}"
+            app:errorIconDrawable="@null"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/til_email">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edt_password"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/hint_password"
+                android:imeOptions="actionDone"
+                android:inputType="textPassword"
+                android:text="@={viewModel.password}" />
+
+        </com.google.android.material.textfield.TextInputLayout>
 
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <Button
+            android:id="@+id/btn_register"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_32sdp"
-            android:text="Register"
+            android:text="@string/register"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/til_password" />
+
+        <include
+            android:id="@+id/loader_view"
+            layout="@layout/layout_loader"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-
 </layout>
+

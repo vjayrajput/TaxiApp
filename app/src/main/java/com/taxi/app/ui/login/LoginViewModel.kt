@@ -5,9 +5,11 @@ import android.text.TextUtils
 import android.util.Log
 import androidx.lifecycle.*
 import com.taxi.app.R
+import com.taxi.app.data.local.prefs.UserPreferenceProvider
 import com.taxi.app.data.model.api.LoginRequest
 import com.taxi.app.data.model.api.LoginResponse
 import com.taxi.app.data.remote.ApiResult
+import com.taxi.app.data.remote.Status
 import com.taxi.app.data.repository.UserRepository
 import com.taxi.app.utils.Event
 import com.taxi.app.utils.extensions.default
@@ -20,9 +22,9 @@ import javax.inject.Inject
 @HiltViewModel
 class LoginViewModel @Inject constructor(
     @ApplicationContext private val appContext: Context,
+    private val userPref: UserPreferenceProvider,
     private val userRepository: UserRepository
-) :
-    ViewModel() {
+) : ViewModel() {
 
     companion object {
         private val TAG: String = LoginViewModel::class.java.simpleName
@@ -73,9 +75,20 @@ class LoginViewModel @Inject constructor(
                 val request = LoginRequest()
                 request.email = email.value!!
                 request.password = password.value!!
-                _loginResponse.addSource(
-                    userRepository.login(request)
-                ) {
+                _loginResponse.addSource(userRepository.login(request)) {
+                    if (it.status == Status.SUCCESS) {
+                        val code = it.data?.code
+                        if (code != 1) {
+                            val user = it.data?.userData
+                            userPref.userId = user?.id ?: ""
+                            userPref.userName = user?.name ?: ""
+                            userPref.userEmail = user?.email ?: ""
+                            userPref.accessToken = user?.token ?: ""
+                            userPref.isLoggedIn = true
+                        } else {
+                            _message.value = Event(it.data.message)
+                        }
+                    }
                     _loginResponse.value = Event(it)
                 }
             }
